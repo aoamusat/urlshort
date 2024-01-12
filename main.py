@@ -3,7 +3,7 @@ from typing import Union
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from sqlalchemy.ext.declarative import declarative_base
-from app.utils.database import engine
+from app.database.config import engine
 
 Base = declarative_base()
 
