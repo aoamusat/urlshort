@@ -1,8 +1,9 @@
 from typing import Union
 
-from fastapi import FastAPI, Response
-from fastapi.responses import JSONResponse, RedirectResponse
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 from pydantic import BaseModel
+from fastapi.templating import Jinja2Templates
 from app.database.config import engine, Base, Session
 from app.database.models.url import URL, User
 from app.validators.all import URLModel
@@ -12,7 +13,7 @@ app = FastAPI()
 
 # Database initialization
 Base.metadata.create_all(bind=engine)
-
+templates = Jinja2Templates(directory="templates")
 
 class Item(BaseModel):
     name: str
@@ -20,9 +21,9 @@ class Item(BaseModel):
     is_offer: Union[bool, None] = None
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+@app.get("/", response_class=HTMLResponse)
+def read_root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/api/v1/shorten")
