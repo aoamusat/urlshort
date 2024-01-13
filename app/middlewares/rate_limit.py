@@ -1,7 +1,8 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse, JSONResponse
+from fastapi import Request, Response
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from datetime import datetime, timedelta
+from typing import Callable
 
 
 class RateLimitingMiddleware(BaseHTTPMiddleware):
@@ -14,7 +15,7 @@ class RateLimitingMiddleware(BaseHTTPMiddleware):
         # Dictionary to store request counts for each IP
         self.request_counts = {}
 
-    async def dispatch(self, request: Request, call_next):
+    async def dispatch(self, request: Request, call_next: Callable) -> Response:
         # Get the client's IP address
         client_ip = request.client.host
 
