@@ -7,13 +7,18 @@ from fastapi.templating import Jinja2Templates
 from app.database.config import engine, Base, Session
 from app.database.models.url import URL, User
 from app.validators.all import URLModel
-from config import BASE_URL
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
 # Database initialization
 Base.metadata.create_all(bind=engine)
+
+# Template configuration
 templates = Jinja2Templates(directory="templates")
+
+# Static files configuration
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 class Item(BaseModel):
     name: str
