@@ -27,7 +27,7 @@ def read_root(request: Request):
 @app.post("/api/v1/shorten", response_class=JSONResponse)
 def shorten(url: URLCreate):
     try:
-        long_url = url.long_url
+        long_url = str(url.long_url)
         db = Session()
         short_url = create_url(db, long_url=long_url)
         return JSONResponse(
@@ -41,5 +41,5 @@ def shorten(url: URLCreate):
 def redirect(short_code):
     url = Session().query(URL).filter(URL.short_code == short_code).first()
     if url is None:
-        return JSONResponse({"message": "Not Found"}, status_code=404)
+        return JSONResponse({"message": "URL Not Found"}, status_code=404)
     return RedirectResponse(url.long_url)
