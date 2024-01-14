@@ -9,6 +9,7 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from datetime import datetime
 
 
 # revision identifiers, used by Alembic.
@@ -24,7 +25,7 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer, primary_key=True, autoincrement="auto"),
         sa.Column("name", sa.String),
         sa.Column("email", sa.String, unique=True),
-        sa.Column("created_at", sa.DateTime, nullable=True)
+        sa.Column("created_at", sa.DateTime, nullable=True, default=datetime.utcnow)
     )
 
 

@@ -9,6 +9,7 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
+from datetime import datetime
 
 
 # revision identifiers, used by Alembic.
@@ -24,18 +25,8 @@ def upgrade() -> None:
         sa.Column("id", sa.Integer, primary_key=True, autoincrement="auto"),
         sa.Column("long_url", sa.String),
         sa.Column("short_code", sa.String, unique=True),
-        sa.Column("user_id", sa.Integer, nullable=False),
-        sa.Column("created_at", sa.DateTime, nullable=True)
-    )
-
-    op.create_foreign_key(
-        "fk_user_url",
-        "urls",
-        "users",
-        ["user_id"],
-        ["id"],
+        sa.Column("created_at", sa.DateTime, nullable=True, default=datetime.utcnow)
     )
 
 def downgrade() -> None:
-    op.drop_constraint("fk_user_url", "urls")
     op.drop_table("urls")
