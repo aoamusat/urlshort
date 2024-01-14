@@ -1,8 +1,125 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <link href="/static/style.css" rel="stylesheet" />
-    </head>
-    <body>
-        <h1>Hello World</h1>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Free URL Shortener is an open-source tool that takes a long URL and turns it into short links or QR codes that are easy to share."
+    />
+    <meta
+      name="keywords"
+      content="open-source url shortener, url shortener, shorten url, short link, shorten link, link shortener, short, qr codes, free, link retargeting, pixel, shortest, URL, tiny, secure, safe, t.ly, short, bit.ly, goo.gl, t.co, link, long url shortened, custom domain"
+    />
+    <title>Free URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio"></script>
+  </head>
+  <body>
+    <div
+      class="bg-gray-200 h-screen flex flex-col items-center justify-center text-center"
+    >
+      <div class="">
+        <h1 class="text-4xl font-bold">Free URL Shortening Service</h1>
+        <p class="font-semibold leading-6 text-gray-600">
+          No Registration, no credit card required
+        </p>
+      </div>
+      <div class="mt-8 shadow-lg">
+        <form
+          action=""
+          onsubmit="shortURL(event);"
+          method="POST"
+          class="flex items-center"
+          id="url-form"
+        >
+          <input
+            type="url"
+            name="url"
+            id="url"
+            placeholder="https://example.com"
+            class="py-2 px-4 rounded-l-md focus:outline-none"
+            required
+          />
+          <button
+            type="submit"
+            id="submitButton"
+            class="bg-blue-500 py-2 px-4 text-white rounded-r-md hover:bg-blue-600 focus:outline-none disabled:opacity-75"
+          >
+            Shorten URL
+          </button>
+        </form>
+        <p class="mt-2 text-gray-400 text-sm">
+          Also available via API. Read the
+          <a
+            class="font-semibold leading-6 text-blue-600 hover:text-blue-500"
+            href="/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+            >docs</a
+          >.
+        </p>
+      </div>
+      <div class="mt-8">
+        <button
+          type="button"
+          class="hidden bg-indigo-500 text-white px-4 py-2 rounded flex items-center justify-center"
+          disabled
+          id="spinner"
+        >
+          <svg
+            class="animate-spin h-5 w-5 mr-3 border-t-2 border-white rounded-full"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V1.5"
+            ></path>
+          </svg>
+          Processing...
+        </button>
+      </div>
+      <div class="mt-8">
+        <div
+          id="short_url_container"
+          class="hidden p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400"
+          role="alert"
+        >
+          <span class="font-medium" id="short_url"></span>
+        </div>
+      </div>
+    </div>
+    <footer class="py-4">
+      <div
+        class="container max-w-5xl mx-auto flex items-center justify-between px-4"
+      >
+        <!-- Copyright Text (Left Side) -->
+        <div class="text-sm">&copy; 2024 Your Name - All rights reserved</div>
+
+        <!-- Social Icons (Right Side) -->
+        <div class="flex space-x-4">
+          <!-- Replace the anchor tags with your social media links/icons -->
+          <a href="#" class="">
+            <i class="fa-brands fa-square-x-twitter fa-2x"></i>Twitter</a
+          ><a href="#" class="">
+            <i class="fa-brands fa-x-twitter fa-2x"></i>LinkedIn </a
+          ><a href="#" class="">
+            <i class="fa-brands fa-x-twitter fa-2x"></i>Github </a
+          ><a href="#" class="">
+            <i class="fa-brands fa-x-twitter fa-2x"></i> Discord
+          </a>
+          <!-- Add more social icons as needed -->
+        </div>
+      </div>
+    </footer>
+    <script src="/static/js/url.js"></script>
+  </body>
 </html>

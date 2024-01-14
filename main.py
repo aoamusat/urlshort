@@ -33,7 +33,7 @@ def read_root(request: Request):
 
 @app.post("/api/v1/shorten")
 def shorten(url: URLModel) -> URLModel:
-    return JSONResponse({"url": url.long_url})
+    return JSONResponse({"short_url": url.long_url})
 
 @app.get("/{short_code}")
 def redirect(short_code):
