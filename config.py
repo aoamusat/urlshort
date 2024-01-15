@@ -1,3 +1,6 @@
+"""
+Configuration file for FastAPI
+"""
 import os
 
 # Database connection string
