@@ -36,8 +36,6 @@ const shortURL = async function (event) {
     });
 
     const { short_url } = await response.json();
-
-    console.log(short_url);
     shortUrlElement.textContent = `Shortened URL: ${short_url}`;
     shortUrlContainer.classList.remove("hidden");
     urlInput.value = "";
