@@ -8,7 +8,7 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel.
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,4 +21,4 @@ jobs:
         with:
           tag_name: "${{ github.ref }}"
           release_name: "Release v${{ github.ref }}"
-          draft: true
+          draft: false
