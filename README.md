@@ -85,13 +85,17 @@ The API documentation is available at http://localhost/docs.
 
 
 # Docker Support
-The service can be containerized using Docker. Use the provided Dockerfile and docker-compose.yml for deployment.
+The service can be containerized using Docker. Use the provided Dockerfile for deployment.
 
 ```bash
 # Build the Docker image
 docker build -t url-shortener .
 ```
 
+Alternatively, you can pull the Docker image from the Docker public repository
+```bash
+docker pull akeemamusat511/urlshorter:latest
+```
 
 # Contributing
 Feel free to contribute to the project. Fork the repository, make your changes, and submit a pull request.
