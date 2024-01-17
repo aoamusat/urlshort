@@ -10,10 +10,28 @@ from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.exc import SQLAlchemyError
+import sentry_sdk
+from sentry_sdk.integrations.logging import LoggingIntegration
+import logging
 from app.utils.helpers import create_url
 from app.database.config import engine, Base, Session
 from app.database.models.url import URL
 from app.schemas.all import URLCreate
+from config import SENTRY_DSN
+
+logging.basicConfig(level=logging.INFO)
+
+sentry_sdk.init(
+    dsn=f"{SENTRY_DSN}",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+    integrations=[LoggingIntegration(level=logging.INFO, event_level=logging.INFO)],
+)
 
 app = FastAPI()
 
@@ -58,11 +76,13 @@ def shorten(url: URLCreate):
         long_url = str(url.long_url)
         db = Session()
         short_url = create_url(db, long_url=long_url)
+        db.close()  # return the connection back to the pool
         return JSONResponse(
             {"short_url": short_url, "long_url": long_url}, status_code=201
         )
-    except SQLAlchemyError as sql_error:
-        return JSONResponse({"message": str(sql_error)}, status_code=500)
+    except SQLAlchemyError as e:
+        logging.error(f"Internal Server Error: {str(e)}")
+        return JSONResponse({"message": str(e)}, status_code=500)
 
 
 @app.get("/{short_code}")
@@ -75,7 +95,7 @@ def redirect(short_code: str):
 
     Returns:
         - RedirectResponse: Redirects to the original URL.
-    
+
     Raises:
         HTTPException: Raises a 404 HTTPException if the short code is not found.
     """
