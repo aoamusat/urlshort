@@ -1,5 +1,7 @@
 # URL Shortening Service
 
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/aoamusat/urlshort/create-release.yml) ![GitHub Release](https://img.shields.io/github/v/release/aoamusat/urlshort)
+
 This is a URL shortening service implemented using FastAPI, Python, PostgreSQL, and Docker.
 
 ## Table of Contents
