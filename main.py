@@ -5,6 +5,7 @@ This file defines a FastAPI application for a simple URL shortener.
 It includes routes for rendering an HTML homepage, shortening URLs via API, 
 and redirecting to the original URLs using short codes.
 """
+import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -12,7 +13,6 @@ from fastapi.staticfiles import StaticFiles
 from sqlalchemy.exc import SQLAlchemyError
 import sentry_sdk
 from sentry_sdk.integrations.logging import LoggingIntegration
-import logging
 from app.utils.helpers import create_url
 from app.database.config import engine, Base, Session
 from app.database.models.url import URL
@@ -81,8 +81,8 @@ def shorten(url: URLCreate):
             {"short_url": short_url, "long_url": long_url}, status_code=201
         )
     except SQLAlchemyError as e:
-        logging.error(f"Internal Server Error: {str(e)}")
-        return JSONResponse({"message": str(e)}, status_code=500)
+        logging.error("Internal Server Error: %s", str(e))
+        return JSONResponse({"message": "Internal Server Error!"}, status_code=500)
 
 
 @app.get("/{short_code}")
