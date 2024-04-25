@@ -5,6 +5,7 @@ This file defines a FastAPI application for a simple URL shortener.
 It includes routes for rendering an HTML homepage, shortening URLs via API, 
 and redirecting to the original URLs using short codes.
 """
+
 import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, RedirectResponse, HTMLResponse
@@ -56,7 +57,10 @@ def read_root(request: Request):
     Returns:
         HTMLResponse: The HTML response containing the rendered template.
     """
-    return templates.TemplateResponse("index.html", {"request": request})
+    try:
+        return templates.TemplateResponse("index.html", {"request": request})
+    except Exception:
+        return HTMLResponse("An error occurred: contact aoamusat@gmail.com")
 
 
 @app.post("/api/v1/shorten", response_class=JSONResponse)
